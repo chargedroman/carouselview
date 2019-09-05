@@ -75,9 +75,12 @@ public class CarouselViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        boolean consumed = false;
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 oldX = ev.getX();
+                consumed = true;
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -89,11 +92,12 @@ public class CarouselViewPager extends ViewPager {
                 }
                 oldX = 0;
                 newX = 0;
+                consumed = true;
                 break;
         }
 
         try {
-            return super.onTouchEvent(ev);
+            return consumed || super.onTouchEvent(ev);
         } catch (IllegalArgumentException e) {
             return false;
         }
